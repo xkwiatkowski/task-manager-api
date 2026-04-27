@@ -18,3 +18,8 @@ def root():
 @app.get("/tasks")
 def get_tasks():
     return tasks
+
+@app.post("/tasks")
+def add_task(task: Task):
+    tasks.append(task)
+    return task
