@@ -13,4 +13,8 @@ tasks: List[Task] = []
 
 @app.get("/")
 def root():
-    return {"message": "API is working!"}
+    return {"message": "API is working!"} 
+
+@app.get("/tasks")
+def get_tasks():
+    return tasks
