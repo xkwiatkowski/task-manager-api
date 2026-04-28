@@ -1,13 +1,19 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from typing import List
 
 app = FastAPI()
 
 class Task(BaseModel):
-    id: int
+    id: int | None = None
     title: str
     done: bool = False
+
+    @field_validator("title")
+    def title_not_empty(cls, value):
+        if not value.strip():
+            raise ValueError("Title cannot be empty")
+        return value
 
 tasks: List[Task] = []
 
@@ -21,6 +27,7 @@ def get_tasks():
 
 @app.post("/tasks")
 def add_task(task: Task):
+    task.id = len(tasks) + 1
     tasks.append(task)
     return task
 
