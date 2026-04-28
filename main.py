@@ -29,3 +29,11 @@ def delete_task(task_id: int):
     global tasks
     tasks = [t for t in tasks if t.id != task_id]
     return {"message": f"Task with id {task_id} deleted."}
+
+@app.put("/tasks/{task_id}")
+def mark_done(task_id: int):
+    for task in tasks:
+        if task.id == task_id:
+            task.done = True
+            return {"message": f"Task with id {task_id} marked as done."}
+    return {"message": f"Task with id {task_id} not found."}
