@@ -23,3 +23,9 @@ def get_tasks():
 def add_task(task: Task):
     tasks.append(task)
     return task
+
+@app.delete("/tasks/{task_id}")
+def delete_task(task_id: int):
+    global tasks
+    tasks = [t for t in tasks if t.id != task_id]
+    return {"message": f"Task with id {task_id} deleted."}
